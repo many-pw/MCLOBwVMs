@@ -35,6 +35,7 @@ https://github.com/bitnami/charts/tree/master/bitnami/wordpress
 
 Example Symphony A:
 
+```
 1. One load balancer with 3 targets:
 
   1. nginx with php on small
@@ -45,11 +46,15 @@ Example Symphony A:
 
   1. main 
   2. replica
-
+```
 Example Symphony B:
 
+```
 1. One <a href="https://github.com/andrewarrow/feedbacks">feedbacks</a> + MariaDB on medium
+```
 
+
+Other Cloud:
 
 https://www.exoscale.com/
 

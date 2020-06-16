@@ -21,7 +21,7 @@ Meet your new orchestra:
 | --- | --- | --- | --- |
 | aws | [instance](https://www.terraform.io/docs/providers/aws/r/instance.html) | [lb](https://www.terraform.io/docs/providers/aws/r/lb.html) |
 | DigitalOcean | [droplet](https://www.terraform.io/docs/providers/do/r/droplet.html) | [loadbalancer](https://www.terraform.io/docs/providers/do/r/loadbalancer.html) | [domain](https://www.terraform.io/docs/providers/do/r/domain.html) [record](https://www.terraform.io/docs/providers/do/r/record.html) [ssh_key](https://www.terraform.io/docs/providers/do/r/ssh_key.html) |
-| Vultr | [server](https://www.terraform.io/docs/providers/vultr/r/server.html) | [load_balancer](https://www.terraform.io/docs/providers/vultr/r/load_balancer.html) |
+| Vultr | [server](https://www.terraform.io/docs/providers/vultr/r/server.html) | [load_balancer](https://www.terraform.io/docs/providers/vultr/r/load_balancer.html) | [domain](https://www.terraform.io/docs/providers/vultr/r/dns_domain.html) [record](https://www.terraform.io/docs/providers/vultr/r/dns_record.html) [ssh_key](https://www.terraform.io/docs/providers/vultr/r/ssh_key.html) |
 | linode | [instance](https://www.terraform.io/docs/providers/linode/r/instance.html) | [nodebalancer](https://www.terraform.io/docs/providers/linode/r/nodebalancer.html) |
 | google | [compute_instance](https://www.terraform.io/docs/providers/google/r/compute_instance.html) | [compute_target_pool](https://www.terraform.io/docs/providers/google/r/compute_target_pool.html) |
 

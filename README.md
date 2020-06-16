@@ -50,7 +50,7 @@ Example Symphony A:
 Example Symphony B:
 
 ```
-1. One <a href="https://github.com/andrewarrow/feedbacks">feedbacks</a> + MariaDB on medium
+1. One [feedbacks](https://github.com/andrewarrow/feedbacks) + MariaDB on medium
 ```
 
 

@@ -14,3 +14,14 @@ This post on hackernews [Container technologies at Coinbase: Why Kubernetes is n
 5. script to do src installs of stuff not in dnf/yum
 
 Your cluster of VMS can still grow and shrink. You can orchestrate symphonies of pods and services just like before in k8s. 
+
+Meet your new orchestrate:
+
+| provider | name of "thing" that runs |
+| --- | --- |
+| aws | instance |
+| DigitalOcean | droplet |
+| Vultr | server |
+| linode | instance |
+| google | compute_instance |
+

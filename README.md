@@ -1,7 +1,7 @@
 # MCLOBwVMs
 Modern, container like orchestration, but with VMs only
 
-This post on hackernews [Container technologies at Coinbase: Why Kubernetes is not part of our stack|https://news.ycombinator.com/item?id=23460066] prompted a discussion about the Movie [Inception|https://en.wikipedia.org/wiki/Inception]. In the movie they dream within a dream and then dream within a dream within a dream... what if we re-thought k8s with one simple rule: no dreams within dreams. If I'm running a VM, don't run another VM or container or any further virtulization because nothing good will come from it, just more and more complexity.
+This post on hackernews [Container technologies at Coinbase: Why Kubernetes is not part of our stack](https://news.ycombinator.com/item?id=23460066) prompted a discussion about the Movie [Inception](https://en.wikipedia.org/wiki/Inception). In the movie they dream within a dream and then dream within a dream within a dream... what if we re-thought k8s with one simple rule: no dreams within dreams. If I'm running a VM, don't run another VM or container or any further virtulization because nothing good will come from it, just more and more complexity.
 
 1. terraform to make new mediums, tiny, and large on cloud provider(s).
 

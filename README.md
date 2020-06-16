@@ -52,6 +52,25 @@ Example Symphony B:
 
 1. One [feedbacks](https://github.com/andrewarrow/feedbacks) + MariaDB on medium
 
+Example install MariaDB:
+
+```
+    vi /etc/yum.repos.d/MariaDB.repo
+
+      [mariadb]
+      name = MariaDB
+      baseurl = http://yum.mariadb.org/10.4/fedora31-amd64
+      gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+      gpgcheck=1
+
+    dnf -y install MariaDB-server MariaDB-client
+    dnf remove mariadb-connector-c-config
+    dnf -y install MariaDB-server MariaDB-client
+    systemctl start mariadb.service
+    systemctl enable mariadb.service
+    mysql_secure_installation 
+```
+
 
 Other Cloud:
 

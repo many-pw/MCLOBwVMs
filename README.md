@@ -13,7 +13,7 @@ This post on hackernews [Container technologies at Coinbase: Why Kubernetes is n
 
 5. script to do src installs of stuff not in dnf/yum
 
-Your cluster of VMS can still grow and shrink. You can orchestrate symphonies of pods and services just like before in k8s. 
+Your cluster of VMs can still grow and shrink. You can orchestrate symphonies of pods and services just like before in k8s. 
 
 Meet your new orchestra:
 
@@ -25,5 +25,12 @@ Meet your new orchestra:
 | linode | [instance](https://www.terraform.io/docs/providers/linode/r/instance.html) | [nodebalancer](https://www.terraform.io/docs/providers/linode/r/nodebalancer.html) | [domain](https://www.terraform.io/docs/providers/linode/r/domain.html) [record](https://www.terraform.io/docs/providers/linode/d/domain_record.html) [ssh_key](https://www.terraform.io/docs/providers/linode/d/sshkey.html) |
 | google | [compute_instance](https://www.terraform.io/docs/providers/google/r/compute_instance.html) | [compute_target_pool](https://www.terraform.io/docs/providers/google/r/compute_target_pool.html) |
 
+Example Dockerfile:
+
+https://github.com/bitnami/bitnami-docker-wordpress/blob/master/5/debian-10/Dockerfile
+
+Example Chart:
+
+https://github.com/bitnami/charts/tree/master/bitnami/wordpress
 
 

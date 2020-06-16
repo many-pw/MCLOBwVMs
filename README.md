@@ -36,10 +36,13 @@ https://github.com/bitnami/charts/tree/master/bitnami/wordpress
 Example Symphony A:
 
 1. One load balancer with 3 targets:
+
   1. nginx with php on small
   2. nginx with php on small
   3. nginx with php on small
+
 2. Two MariaDB on medium:
+
   1. main 
   2. replica
 

@@ -33,4 +33,38 @@ Example Chart:
 
 https://github.com/bitnami/charts/tree/master/bitnami/wordpress
 
+Example Symphony A:
+
+1. One load balancer with 3 targets:
+  1. nginx with php on small
+  2. nginx with php on small
+  3. nginx with php on small
+2. Two MariaDB on medium:
+  1. main 
+  2. replica
+
+Example Symphony B:
+
+1. One <a href="https://github.com/andrewarrow/feedbacks">feedbacks</a> + MariaDB on medium
+
+
+https://www.exoscale.com/
+
+https://gridscale.io/
+
+https://www.hetzner.com/
+
+https://www.ncloud.com/
+
+https://www.nutanix.com/en
+
+https://opennebula.io/
+
+https://us.ovhcloud.com/
+
+https://www.scaleway.com/en/
+
+https://www.joyent.com/triton/compute
+
+https://cloud.yandex.com/
 

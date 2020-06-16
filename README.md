@@ -17,11 +17,11 @@ Your cluster of VMS can still grow and shrink. You can orchestrate symphonies of
 
 Meet your new orchestra:
 
-| provider | name of "thing" that runs |
-| --- | --- |
-| aws | instance |
-| DigitalOcean | droplet |
-| Vultr | server |
-| linode | instance |
-| google | compute_instance |
+| provider | name of "thing" that runs | name of load balancer |
+| --- | --- | --- |
+| aws | instance | lb |
+| DigitalOcean | droplet | loadbalancer |
+| Vultr | server | load_balancer |
+| linode | instance | nodebalancer |
+| google | compute_instance | compute_target_pool |
 

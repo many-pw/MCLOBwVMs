@@ -27,24 +27,21 @@ Meet your new orchestra:
 
 Examples:
 
-1. Video Sharing App, Day One all parts running on 1 tiny VM:
+1. Video Sharing App, Day One all parts running on 1 tiny VM, $5.00 a month:
 
 | vm | thing | description |
 | --- | --- | --- |
 | vm1,tiny | mysql | 1 central database, everyone talks to me |
 | vm1,tiny | webserver | handles incoming https requests, enqueues new jobs to worker(s) |
 | vm1,tiny | ffmpeg worker | converts uploaded videos into format needed |
-| --- | --- | $5.00 a month |
 
-2. Video Sharing App, Day 30 each part has its own tiny VM:
+2. Video Sharing App, Day 30 each part has its own tiny VM, $15.00 a month:
 
 | vm | thing |
 | --- | --- |
 | vm1,tiny | mysql |
 | vm2,tiny | webserver |
 | vm3,tiny | ffmpeg worker |
-| --- |
-| $15.00 a month |
 
 3. Video Sharing App, Day 90 mysql in medium VM, multiple webservers + workers:
 
@@ -55,8 +52,7 @@ Examples:
 | vm2.2,tiny | webserver | $5.00 |
 | vm3.1,tiny | ffmpeg worker | $5.00 |
 | vm3.2,tiny | ffmpeg worker | $5.00 |
-| --- |
-| $60.00 a month |
+| | | $60.00 a month |
 
 Example install MariaDB:
 

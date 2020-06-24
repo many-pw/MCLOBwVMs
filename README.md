@@ -5,13 +5,13 @@ This post on hackernews [Container technologies at Coinbase: Why Kubernetes is n
 
 1. terraform to make new mediums, tiny, and large on cloud provider(s).
 
-2. use default tiny linux available
+2. use latest fedora when possible.
 
-3. script to make linux have dnf/yum installs u need
+3. script to make linux have dnf installs u need
 
 4. script to change no. files. and/or add SWAP
 
-5. script to do src installs of stuff not in dnf/yum
+5. script to do src installs of stuff not in dnf
 
 Your cluster of VMs can still grow and shrink. You can orchestrate symphonies of pods and services just like before in k8s. 
 
@@ -25,50 +25,57 @@ Meet your new orchestra:
 | linode | [instance](https://www.terraform.io/docs/providers/linode/r/instance.html) | [nodebalancer](https://www.terraform.io/docs/providers/linode/r/nodebalancer.html) | [domain](https://www.terraform.io/docs/providers/linode/r/domain.html) [record](https://www.terraform.io/docs/providers/linode/d/domain_record.html) [ssh_key](https://www.terraform.io/docs/providers/linode/d/sshkey.html) |
 | google | [compute_instance](https://www.terraform.io/docs/providers/google/r/compute_instance.html) | [compute_target_pool](https://www.terraform.io/docs/providers/google/r/compute_target_pool.html) | [bucket](https://www.terraform.io/docs/providers/google/r/storage_bucket.html)
 
-Example Dockerfile:
+Examples:
 
-https://github.com/bitnami/bitnami-docker-wordpress/blob/master/5/debian-10/Dockerfile
+1. Video Sharing App, Day One all parts running on 1 tiny VM:
 
-Example Chart:
+| vm | thing | description |
+| --- | --- | --- |
+| vm1,tiny | mysql | 1 central database, everyone talks to me |
+| vm1,tiny | webserver | handles incoming https requests, enqueues new jobs to worker(s) |
+| vm1,tiny | ffmpeg worker | converts uploaded videos into format needed |
+| --- |
+| $5.00 a month |
 
-https://github.com/bitnami/charts/tree/master/bitnami/wordpress
+2. Video Sharing App, Day 30 each part has its own tiny VM:
 
-Example Symphony A:
+| vm | thing |
+| --- | --- |
+| vm1,tiny | mysql |
+| vm2,tiny | webserver |
+| vm3,tiny | ffmpeg worker |
+| --- |
+| $15.00 a month |
 
-```
-1. load balancer with 3 targets:
+3. Video Sharing App, Day 90 mysql in medium VM, multiple webservers + workers:
 
-  1. nginx with php on small
-  2. nginx with php on small
-  3. nginx with php on small
-
-2. MariaDB on medium:
-
-  1. main 
-  2. replica
-```
-
-Example Symphony B:
-
-1. One [feedbacks](https://github.com/andrewarrow/feedbacks) + MariaDB on medium
+| vm | thing | cost |
+| --- | --- | --- |
+| vm1,medium | mysql | $40.00 |
+| vm2.1,tiny | webserver | $5.00 |
+| vm2.2,tiny | webserver | $5.00 |
+| vm3.1,tiny | ffmpeg worker | $5.00 |
+| vm3.2,tiny | ffmpeg worker | $5.00 |
+| --- |
+| $60.00 a month |
 
 Example install MariaDB:
 
 ```
-    vi /etc/yum.repos.d/MariaDB.repo
-
-      [mariadb]
-      name = MariaDB
-      baseurl = http://yum.mariadb.org/10.4/fedora31-amd64
-      gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
-      gpgcheck=1
-
-    dnf -y install MariaDB-server MariaDB-client
-    dnf remove mariadb-connector-c-config
-    dnf -y install MariaDB-server MariaDB-client
-    systemctl start mariadb.service
-    systemctl enable mariadb.service
-    mysql_secure_installation 
+     "fallocate -l 4G /swapfile",
+     "chmod 600 /swapfile",
+     "mkswap /swapfile",
+     "swapon /swapfile",
+     "echo '/swapfile   none    swap    sw    0   0' >> /etc/fstab",
+     "echo '[mariadb]' > /etc/yum.repos.d/MariaDB.repo",
+     "echo 'name = MariaDB' >> /etc/yum.repos.d/MariaDB.repo",
+     "echo 'baseurl = http://yum.mariadb.org/10.4/fedora31-amd64' >> /etc/yum.repos.d/MariaDB.repo",
+     "echo 'gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB' >> /etc/yum.repos.d/MariaDB.repo",
+     "echo 'gpgcheck=1' >> /etc/yum.repos.d/MariaDB.repo",
+     "dnf -y install MariaDB-server MariaDB-client",
+     "systemctl start mariadb.service",
+     "systemctl enable mariadb.service",
+     "mysqladmin --user=root password 'foo2bar'",
 ```
 
 

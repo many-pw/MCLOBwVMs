@@ -34,8 +34,7 @@ Examples:
 | vm1,tiny | mysql | 1 central database, everyone talks to me |
 | vm1,tiny | webserver | handles incoming https requests, enqueues new jobs to worker(s) |
 | vm1,tiny | ffmpeg worker | converts uploaded videos into format needed |
-| --- |
-| $5.00 a month |
+| --- | --- | $5.00 a month |
 
 2. Video Sharing App, Day 30 each part has its own tiny VM:
 

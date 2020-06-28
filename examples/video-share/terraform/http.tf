@@ -1,6 +1,6 @@
 resource "digitalocean_droplet" "http" {
   image = "fedora-32-x64"
-  name = "http"
+  name = "jjaa.me"
   region = "nyc3"
   size = "s-1vcpu-1gb"
   private_networking = true
@@ -44,6 +44,8 @@ resource "digitalocean_droplet" "http" {
      "cp templates/* /http/templates",
      "cp assets/* /http/assets",
      "go build; cp http /bin/",
+     "openssl genrsa -out /http/dkim_private.pem 2048",
+     "openssl rsa -in dkim_private.pem -pubout -outform der 2>/dev/null | openssl base64 -A > dkim_private.64"
      "/mclob --add-service http ${var.mysql_root_password}",
     ]
   }
@@ -59,4 +61,18 @@ resource "digitalocean_record" "a" {
   type   = "A"
   name   = "@"
   value  = digitalocean_droplet.http.ipv4_address
+}
+resource "digitalocean_record" "a" {
+  depends_on = ["digitalocean_droplet.http"]
+  domain = digitalocean_domain.jjaa_me.name
+  type   = "CNAME"
+  name   = "mail.jjaa.me"
+  value = "@"
+}
+resource "digitalocean_record" "a" {
+  depends_on = ["digitalocean_droplet.http"]
+  domain = digitalocean_domain.jjaa_me.name
+  type   = "TXT"
+  name   = "@"
+  value = "selector123._domainkey123.jjaa.me"
 }

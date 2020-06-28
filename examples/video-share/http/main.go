@@ -19,8 +19,8 @@ func main() {
 	router := gin.Default()
 	server.SetRoutes(router)
 	if os.Getenv("GIN_MODE") == "release" {
-		server.AddTemplates(router, "/")
-		router.Static("/assets", "/assets")
+		server.AddTemplates(router, "/http/")
+		router.Static("/assets", "/http/assets")
 		server.RunHttpAndHttps(router)
 	} else {
 		server.AddTemplates(router, "./")

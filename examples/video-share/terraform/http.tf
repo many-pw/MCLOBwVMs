@@ -33,15 +33,15 @@ resource "digitalocean_droplet" "http" {
      "mysql -uroot -e 'CREATE DATABASE jjaa_me CHARACTER SET utf8 COLLATE utf8_general_ci'"
      "dnf -y install go",
      "git clone https://github.com/many-pw/MCLOBwVMs.git",
-     "mkdir /templates",
-     "mkdir /assets"
+     "mkdir /http",
+     "mkdir /http/templates",
+     "mkdir /http/assets"
      "cd MCLOBwVMs",
      "go build; cp mclob /",
      "cd examples/video-share/http",
-     "cp templates/* /templates",
-     "cp assets/* /assets",
-     "go build; cp http /",
-     "useradd http",
+     "cp templates/* /http/templates",
+     "cp assets/* /http/assets",
+     "go build; cp http /http/",
      "/mclob --add-service http ${var.mysql_root_password}",
     ]
   }

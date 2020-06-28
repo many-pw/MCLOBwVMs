@@ -21,8 +21,8 @@ After=network-online.target
 
 [Service]
 User=root
-WorkingDirectory=/
-ExecStart=/%s 3000 3000
+WorkingDirectory=/http
+ExecStart=/http/%s 3000 3000
 Type=simple
 Restart=always
 RestartSec=0

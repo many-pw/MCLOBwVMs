@@ -9,7 +9,6 @@ import (
 	"github.com/tjarratt/babble"
 	e "jjaa.me/email"
 	"jjaa.me/models"
-	"jjaa.me/util"
 )
 
 var babbler = babble.NewBabbler()
@@ -26,9 +25,8 @@ func SessionsNew(c *gin.Context) {
 }
 func SessionsCreate(c *gin.Context) {
 	user := models.User{}
-	host := util.AllConfig.Http.Host
 	email := c.PostForm("email")
-	c.SetCookie("lastEmail", email, 3600, "/", host, false, false)
+	c.SetCookie("lastEmail", email, 3600, "/", Host, false, false)
 	password := c.PostForm("password")
 	flash := ""
 
@@ -44,7 +42,7 @@ func SessionsCreate(c *gin.Context) {
 		} else {
 			if rows.Next() {
 				rows.StructScan(&user)
-				c.SetCookie("user", user.Encode(), 3600*24*365, "/", host, false, false)
+				c.SetCookie("user", user.Encode(), 3600*24*365, "/", Host, false, false)
 			} else {
 				babbler.Count = 4
 				phrase := babbler.Babble()
@@ -63,13 +61,12 @@ values (:email, SHA1(:phrase), :flavor)`, m)
 			}
 		}
 	}
-	c.SetCookie("flash", flash, 3600, "/", host, false, false)
+	c.SetCookie("flash", flash, 3600, "/", Host, false, false)
 	c.Redirect(http.StatusFound, "/")
 	c.Abort()
 }
 func SessionsDestroy(c *gin.Context) {
-	host := util.AllConfig.Http.Host
-	c.SetCookie("user", "", 3600, "/", host, false, false)
+	c.SetCookie("user", "", 3600, "/", Host, false, false)
 
 	c.Redirect(http.StatusFound, "/")
 	c.Abort()

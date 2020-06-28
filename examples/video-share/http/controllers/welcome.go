@@ -6,10 +6,10 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/jmoiron/sqlx"
 	"jjaa.me/models"
-	"jjaa.me/util"
 )
 
 var Db *sqlx.DB
+var Host string
 var flash = ""
 var user *models.User
 
@@ -54,8 +54,7 @@ func BeforeAll(flavor string, c *gin.Context) bool {
 }
 
 func SetFlash(s string, c *gin.Context) {
-	host := util.AllConfig.Http.Host
-	c.SetCookie("flash", s, 3600, "/", host, false, false)
+	c.SetCookie("flash", s, 3600, "/", Host, false, false)
 }
 
 func WelcomeIndex(c *gin.Context) {

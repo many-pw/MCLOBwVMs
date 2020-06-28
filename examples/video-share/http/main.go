@@ -15,6 +15,7 @@ func main() {
 	rand.Seed(time.Now().UnixNano())
 
 	controllers.Db = persist.Connection()
+	controllers.Host = "jjaa.me"
 
 	router := gin.Default()
 	server.SetRoutes(router)
@@ -25,6 +26,7 @@ func main() {
 	} else {
 		server.AddTemplates(router, "./")
 		router.Static("/assets", "assets")
+		controllers.Host = "localhost"
 		router.Run(":3000")
 	}
 }

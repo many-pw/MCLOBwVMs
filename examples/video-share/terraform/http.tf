@@ -41,7 +41,7 @@ resource "digitalocean_droplet" "http" {
      "cd examples/video-share/http",
      "cp templates/* /http/templates",
      "cp assets/* /http/assets",
-     "go build; cp http /http/",
+     "go build; cp http /bin/",
      "/mclob --add-service http ${var.mysql_root_password}",
     ]
   }

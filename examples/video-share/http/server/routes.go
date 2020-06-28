@@ -1,27 +1,41 @@
 package server
 
 import (
-	"fmt"
+	"crypto/tls"
 	"net/http"
-	"time"
 
 	"github.com/gin-gonic/gin"
+	"golang.org/x/crypto/acme/autocert"
 )
 
-func Serve(port string) {
-	router := gin.Default()
+func SetRoutes(router *gin.Engine) {
 
 	//router.Static("/assets", prefix+"assets")
 	//router.GET("/", controllers.WelcomeIndex)
 
+	router.GET("/", func(c *gin.Context) {
+		c.String(http.StatusOK, "welcome")
+	})
 	router.GET("/ping", func(c *gin.Context) {
 		c.String(http.StatusOK, "pong")
 	})
+}
 
-	go router.Run(fmt.Sprintf(":%s", port))
-
-	for {
-		time.Sleep(time.Second)
+func RunHttpAndHttps(router *gin.Engine) {
+	certManager := autocert.Manager{
+		Prompt:     autocert.AcceptTOS,
+		HostPolicy: autocert.HostWhitelist("jjaa.me"),
+		Cache:      autocert.DirCache("/certs"),
 	}
 
+	server := &http.Server{
+		Addr:    ":https",
+		Handler: router,
+		TLSConfig: &tls.Config{
+			GetCertificate: certManager.GetCertificate,
+		},
+	}
+
+	go http.ListenAndServe(":http", certManager.HTTPHandler(nil))
+	server.ListenAndServeTLS("", "")
 }

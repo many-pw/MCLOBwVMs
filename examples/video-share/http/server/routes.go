@@ -6,16 +6,13 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/acme/autocert"
+	"jjaa.me/http/controllers"
 )
 
 func SetRoutes(router *gin.Engine) {
 
-	//router.Static("/assets", prefix+"assets")
-	//router.GET("/", controllers.WelcomeIndex)
+	router.GET("/", controllers.WelcomeIndex)
 
-	router.GET("/", func(c *gin.Context) {
-		c.String(http.StatusOK, "welcome")
-	})
 	router.GET("/ping", func(c *gin.Context) {
 		c.String(http.StatusOK, "pong")
 	})

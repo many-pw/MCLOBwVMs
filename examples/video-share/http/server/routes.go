@@ -13,6 +13,11 @@ func SetRoutes(router *gin.Engine) {
 
 	router.GET("/", controllers.WelcomeIndex)
 
+	sessions := router.Group("/sessions")
+	sessions.GET("/new", controllers.SessionsNew)
+	sessions.POST("/", controllers.SessionsCreate)
+	sessions.POST("/destroy", controllers.SessionsDestroy)
+
 	router.GET("/ping", func(c *gin.Context) {
 		c.String(http.StatusOK, "pong")
 	})

@@ -6,7 +6,7 @@ import (
 	"os"
 	"time"
 
-	"jjaa.me/server"
+	"jjaa.me/http/server"
 	"jjaa.me/util"
 )
 

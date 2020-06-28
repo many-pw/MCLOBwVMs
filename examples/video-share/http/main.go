@@ -6,11 +6,15 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"jjaa.me/http/controllers"
 	"jjaa.me/http/server"
+	"jjaa.me/persist"
 )
 
 func main() {
 	rand.Seed(time.Now().UnixNano())
+
+	controllers.Db = persist.Connection()
 
 	router := gin.Default()
 	server.SetRoutes(router)

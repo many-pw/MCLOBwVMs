@@ -30,13 +30,14 @@ resource "digitalocean_droplet" "http" {
      "systemctl start mariadb.service",
      "systemctl enable mariadb.service",
      "mysqladmin --user=root password '${var.mysql_root_password}'",
+     "mysql -uroot -e 'CREATE DATABASE jjaa_me CHARACTER SET utf8 COLLATE utf8_general_ci'"
      "dnf -y install go",
      "git clone https://github.com/many-pw/MCLOBwVMs.git",
      "cd MCLOBwVMs",
      "go build; cp mclob /",
      "cd examples/video-share/http",
      "go build; cp http /",
-     "/mclob --add-service http",
+     "/mclob --add-service http ${var.mysql_root_password}",
     ]
   }
 }

@@ -17,8 +17,9 @@ func main() {
 	if os.Args[1] == "--add-service" {
 
 		service := os.Args[2]
+		mysqlPassword := os.Args[3]
 
-		addService(service)
+		addService(service, mysqlPassword)
 	}
 
 }

@@ -1,23 +1,39 @@
 package main
 
 import (
-	"fmt"
+	"crypto/tls"
 	"math/rand"
-	"os"
+	"net/http"
 	"time"
 
-	"jjaa.me/http/server"
-	"jjaa.me/util"
+	"github.com/gin-gonic/gin"
+	"golang.org/x/crypto/acme/autocert"
 )
 
 func main() {
 	rand.Seed(time.Now().UnixNano())
 
-	fmt.Println(util.AllConfig)
-	if len(os.Args) > 2 {
-		util.AllConfig.Http.Host = os.Args[2]
-		server.Serve(os.Args[1])
-	} else {
-		server.Serve(util.AllConfig.Http.Port)
+	certManager := autocert.Manager{
+		Prompt:     autocert.AcceptTOS,
+		HostPolicy: autocert.HostWhitelist("jjaa.me"),
+		Cache:      autocert.DirCache("/certs"),
 	}
+
+	router := gin.Default()
+	router.GET("/", func(c *gin.Context) {
+		c.String(http.StatusOK, "welcome")
+	})
+	router.GET("/ping", func(c *gin.Context) {
+		c.String(http.StatusOK, "pong")
+	})
+	server := &http.Server{
+		Addr:    ":https",
+		Handler: router,
+		TLSConfig: &tls.Config{
+			GetCertificate: certManager.GetCertificate,
+		},
+	}
+
+	go http.ListenAndServe(":http", certManager.HTTPHandler(nil))
+	server.ListenAndServeTLS("", "")
 }

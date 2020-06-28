@@ -8,5 +8,5 @@ require (
 	github.com/justincampbell/timeago v0.0.0-20160528003754-027f40306f1d
 	github.com/russross/blackfriday v1.5.2
 	github.com/spf13/viper v1.7.0
-	golang.org/x/crypto v0.0.0-20190605123033-f99c8df09eb5
+	golang.org/x/crypto v0.0.0-20200602180216-279210d13fed
 )

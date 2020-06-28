@@ -74,5 +74,5 @@ resource "digitalocean_record" "a" {
   domain = digitalocean_domain.jjaa_me.name
   type   = "TXT"
   name   = "@"
-  value = "selector123._domainkey123.jjaa.me"
+  value = "jjaame._domainkey"
 }

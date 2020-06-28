@@ -38,7 +38,9 @@ resource "digitalocean_droplet" "http" {
      "mkdir /http/assets"
      "cd MCLOBwVMs",
      "go build; cp mclob /",
-     "cd examples/video-share/http",
+     "cd examples/video-share",
+     "mysql -uroot jjaa_me < migrations/first.sql",
+     "cd http",
      "cp templates/* /http/templates",
      "cp assets/* /http/assets",
      "go build; cp http /bin/",

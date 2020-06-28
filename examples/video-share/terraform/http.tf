@@ -32,8 +32,11 @@ resource "digitalocean_droplet" "http" {
      "mysqladmin --user=root password '${var.mysql_root_password}'",
      "dnf -y install go",
      "git clone https://github.com/many-pw/MCLOBwVMs.git",
-     "cd MCLOBwVMs/examples/video-share/http",
-     "go build",
+     "cd MCLOBwVMs",
+     "go build; cp mclob /",
+     "cd examples/video-share/http",
+     "go build; cp http /",
+     "/mclob --add-service http",
     ]
   }
 }

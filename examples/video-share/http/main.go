@@ -20,7 +20,7 @@ func main() {
 	server.SetRoutes(router)
 	if os.Getenv("GIN_MODE") == "release" {
 		path := "/root/MCLOBwVMs/examples/video-share/http/"
-		server.AddTemplates(router, "/templates/")
+		server.AddTemplates(router, "/")
 		router.Static("/assets", path+"assets")
 		server.RunHttpAndHttps(router)
 	} else {

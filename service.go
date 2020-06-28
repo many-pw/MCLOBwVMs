@@ -10,6 +10,7 @@ func addService(name string) {
 	service := fmt.Sprintf(SERVICE, name, name, name)
 	ioutil.WriteFile("/etc/systemd/system/"+name+".service", []byte(service), 0644)
 	exec.Command("systemctl", "daemon-reload").Run()
+	exec.Command("systemctl", "enable", name).Run()
 	exec.Command("systemctl", "start", name).Run()
 }
 

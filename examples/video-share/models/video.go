@@ -17,6 +17,11 @@ type Video struct {
 
 const VIDEO_SELECT = "SELECT id, status, url_safe_name as urlsafename, title, comments, UNIX_TIMESTAMP(created_at) as createdat from videos"
 
+func SelectVideoForWorker(db *sqlx.DB, name string) (*Video, string) {
+	item := Video{}
+
+	return &item, ""
+}
 func SelectVideo(db *sqlx.DB, name string) (*Video, string) {
 	item := Video{}
 	sql := fmt.Sprintf("%s where url_safe_name=:name", VIDEO_SELECT)

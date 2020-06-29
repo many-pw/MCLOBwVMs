@@ -53,9 +53,9 @@ values (:email, SHA1(:phrase), :flavor)`, m)
 				if err != nil {
 					flash = "was not able to login, review your emails from us."
 					models.UpdateUser(Db, phrase, email)
-					go e.Send(email, "info@many.pw", "your jjaa.me info", phrase)
+					go e.Send(email, "info@jjaa.me", "your jjaa.me info", phrase)
 				} else {
-					go e.Send(email, "info@many.pw", "welcome to jjaa.me", phrase)
+					go e.Send(email, "info@jjaa.me", "welcome to jjaa.me", phrase)
 					flash = "check your email for your pass phrase"
 				}
 			}

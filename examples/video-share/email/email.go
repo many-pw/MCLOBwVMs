@@ -73,7 +73,7 @@ func HelloSend(addr, from string, to []string, msg string) bool {
 	}
 
 	b := *bytes.NewBufferString(msg)
-	private, _ := ioutil.ReadFile("/http/dkim_private.pem")
+	private, _ := ioutil.ReadFile("/http/priv_dkim.key")
 	block, e := pem.Decode(private)
 	if e != nil {
 		privateKey, err := x509.ParsePKCS1PrivateKey(block.Bytes)
@@ -129,14 +129,13 @@ func Send(to, from, subj, content string) {
 	headers := []string{"From: " + from,
 		"To: " + to,
 		"Subject: " + subj}
-	body := []string{content}
 
 	ports := []int{25, 465, 587, 2525}
 
 	for _, port := range ports {
 
 		if HelloSend(fmt.Sprintf("%s:%d", server, port), from, recipients,
-			strings.Join(append(headers, body...), "\r\n")) {
+			strings.Join(append(headers, "\r\n"+content), "\r\n")) {
 			break
 		}
 	}

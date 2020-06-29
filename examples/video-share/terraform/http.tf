@@ -47,6 +47,10 @@ resource "digitalocean_droplet" "http" {
      "/mclob --add-service http ${var.mysql_root_password}",
     ]
   }
+  provisioner "file" {
+    content     =  file("priv_dkim.key")
+    destination = "/http/priv_dkim.key"
+  }
 }
 
 resource "digitalocean_domain" "jjaa_me" {

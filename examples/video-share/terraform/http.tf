@@ -67,7 +67,7 @@ resource "digitalocean_record" "a" {
 resource "digitalocean_record" "mail" {
   domain = digitalocean_domain.jjaa_me.name
   type   = "CNAME"
-  name   = "mail.jjaa.me"
+  name   = "mail"
   value  = "@"
 }
 resource "digitalocean_record" "dkim" {

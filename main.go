@@ -35,7 +35,7 @@ func main() {
 			}
 			lines = append(lines, line)
 		}
-		content := fmt.Sprintf("v=DKIM1; k=rsa; p=\"%s\"", []byte(strings.Join(lines, "")))
+		content := fmt.Sprintf("\"v=DKIM1; k=rsa; p=%s\"", []byte(strings.Join(lines, "")))
 		ioutil.WriteFile("pub_dkim.key", []byte(content), 0644)
 	} else if os.Args[1] == "--dkim" {
 

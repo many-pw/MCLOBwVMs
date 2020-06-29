@@ -83,3 +83,9 @@ resource "digitalocean_record" "spf" {
   value  = "v=spf1 mx include:_spf.jjaa.me -all"
   name   = "@"
 }
+
+resource "digitalocean_spaces_bucket" "cloud" {
+  name   = "jjaa.me.cloud"
+  region = "sfo2"
+}
+

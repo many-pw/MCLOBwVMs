@@ -57,47 +57,4 @@ Examples:
 | cloud-storage |  | variable | 
 | | | $60.00 a month |
 
-Example install MariaDB:
-
-```
-     "fallocate -l 4G /swapfile",
-     "chmod 600 /swapfile",
-     "mkswap /swapfile",
-     "swapon /swapfile",
-     "echo '/swapfile   none    swap    sw    0   0' >> /etc/fstab",
-     "echo '[mariadb]' > /etc/yum.repos.d/MariaDB.repo",
-     "echo 'name = MariaDB' >> /etc/yum.repos.d/MariaDB.repo",
-     "echo 'baseurl = http://yum.mariadb.org/10.4/fedora31-amd64' >> /etc/yum.repos.d/MariaDB.repo",
-     "echo 'gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB' >> /etc/yum.repos.d/MariaDB.repo",
-     "echo 'gpgcheck=1' >> /etc/yum.repos.d/MariaDB.repo",
-     "dnf -y install MariaDB-server MariaDB-client",
-     "systemctl start mariadb.service",
-     "systemctl enable mariadb.service",
-     "mysqladmin --user=root password 'foo2bar'",
-```
-
-
-Other Cloud:
-
-https://us.alibabacloud.com/
-
-https://www.exoscale.com/
-
-https://gridscale.io/
-
-https://www.hetzner.com/
-
-https://www.ncloud.com/
-
-https://www.nutanix.com/en
-
-https://opennebula.io/
-
-https://us.ovhcloud.com/
-
-https://www.scaleway.com/en/
-
-https://www.joyent.com/triton/compute
-
-https://cloud.yandex.com/
-
+See [examples](https://github.com/many-pw/MCLOBwVMs/tree/master/examples)

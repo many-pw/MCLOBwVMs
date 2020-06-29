@@ -9,6 +9,6 @@ provider "digitalocean" {
 
 /*
 
-terraform apply -var "do_token=${DO_PAT}" -var "ssh_fingerprint=${DO_SSH_FINGERPRINT}"  -var "pvt_key=$HOME/.ssh/id_rsa" -var "mysql_root_password=${MYSQL_ROOT_PASSWORD}"
+terraform apply -var "do_token=${DO_PAT}" -var "ssh_fingerprint=${DO_SSH_FINGERPRINT}"  -var "pvt_key=$HOME/.ssh/id_rsa" -var "mysql_root_password='${MYSQL_ROOT_PASSWORD}'"
 
 */

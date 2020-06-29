@@ -2,3 +2,5 @@ mclob
 priv_dkim.key
 pub_dkim.key
 go.sum
+.terraform
+terraform.tfstate

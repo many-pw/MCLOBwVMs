@@ -90,19 +90,18 @@ func VideosDestroy(c *gin.Context) {
 	c.Abort()
 }
 func VideosFile(c *gin.Context) {
-	/*
-		BeforeAll("", c)
-		video, _ := models.SelectVideo(Db, c.Param("name"))
-		file, _ := c.FormFile("file")
-		tokens := strings.Split(file.Filename, ".")
-		ext := tokens[len(tokens)-1]
-		fileWithExt := video.UrlSafeName + "." + ext
-		c.SaveUploadedFile(file, util.AllConfig.Path.Videos+fileWithExt)
-		models.UpdateVideo(Db, "uploaded", video.UrlSafeName)
-		go convertVideoFile(fileWithExt, video.UrlSafeName)
-		c.Redirect(http.StatusFound, "/")
-		c.Abort()
-	*/
+	BeforeAll("", c)
+	fileHeader, _ := c.FormFile("file")
+	video, _ := models.SelectVideo(Db, c.Param("name"))
+	tokens := strings.Split(fileHeader.Filename, ".")
+	ext := tokens[len(tokens)-1]
+	fileWithExt := video.UrlSafeName + "." + ext
+	f, _ := fileHeader.Open()
+	UploadToBucket(fileWithExt, f)
+	f.Close()
+	models.UpdateVideo(Db, "uploaded", video.UrlSafeName)
+	c.Redirect(http.StatusFound, "/")
+	c.Abort()
 }
 func convertVideoFile(fileWithExt, filename string) {
 	/*

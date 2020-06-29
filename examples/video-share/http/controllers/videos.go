@@ -97,9 +97,11 @@ func VideosFile(c *gin.Context) {
 	ext := tokens[len(tokens)-1]
 	fileWithExt := video.UrlSafeName + "." + ext
 	f, _ := fileHeader.Open()
-	UploadToBucket(fileWithExt, f)
-	f.Close()
-	models.UpdateVideo(Db, "uploaded", video.UrlSafeName)
+	go func() {
+		UploadToBucket(fileWithExt, f)
+		f.Close()
+		models.UpdateVideo(Db, "uploaded", video.UrlSafeName)
+	}()
 	c.Redirect(http.StatusFound, "/")
 	c.Abort()
 }

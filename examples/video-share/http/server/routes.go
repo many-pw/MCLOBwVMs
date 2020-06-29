@@ -18,6 +18,16 @@ func SetRoutes(router *gin.Engine) {
 	sessions.POST("/", controllers.SessionsCreate)
 	sessions.POST("/destroy", controllers.SessionsDestroy)
 
+	videos := router.Group("/videos")
+	videos.GET("/new", controllers.VideosNew)
+	videos.POST("/", controllers.VideosCreate)
+	videos.GET("/", controllers.VideosIndex)
+	videos.GET("/all", controllers.VideosAllIndex)
+	videos.GET("/upload/:name", controllers.VideosUpload)
+	videos.POST("/destroy", controllers.VideosDestroy)
+	videos.POST("/file/:name", controllers.VideosFile)
+	videos.GET("/view/:name", controllers.VideosShow)
+
 	router.GET("/ping", func(c *gin.Context) {
 		c.String(http.StatusOK, "pong")
 	})

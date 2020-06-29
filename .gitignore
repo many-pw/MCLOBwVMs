@@ -4,3 +4,4 @@ pub_dkim.key
 go.sum
 .terraform
 terraform.tfstate
+terraform.tfstate.backup

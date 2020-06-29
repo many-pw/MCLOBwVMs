@@ -21,8 +21,10 @@ func main() {
 
 		service := os.Args[2]
 		mysqlPassword := os.Args[3]
+		doId := os.Args[4]
+		doSecret := os.Args[5]
 
-		addService(service, mysqlPassword)
+		addService(service, mysqlPassword, doId, doSecret)
 	} else if os.Args[1] == "--terraform" {
 		exec.Command("openssl", "genrsa", "-out", "priv_dkim.key", "1024").Run()
 		exec.Command("openssl", "rsa", "-in", "priv_dkim.key",

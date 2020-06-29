@@ -49,7 +49,7 @@ resource "digitalocean_droplet" "http" {
      "mysql -uroot -e 'CREATE DATABASE jjaa_me CHARACTER SET utf8 COLLATE utf8_general_ci'",
      "mysql -uroot jjaa_me < ../migrations/first.sql",
      "cd /root/MCLOBwVMs",
-     "/mclob --add-service http ${var.mysql_root_password}",
+     "/mclob --add-service http ${var.mysql_root_password} ${var.access_id} ${var.secret_key}",
     ]
   }
 }

@@ -20,6 +20,7 @@ func main() {
 	router := gin.Default()
 	server.SetRoutes(router)
 	if os.Getenv("GIN_MODE") == "release" {
+		go server.DoMysqlBackups()
 		server.AddTemplates(router, "/http/")
 		router.Static("/assets", "/http/assets")
 		server.RunHttpAndHttps(router)

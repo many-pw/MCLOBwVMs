@@ -47,8 +47,11 @@ resource "digitalocean_droplet" "http" {
      "systemctl enable mariadb.service",
      "mysqladmin --user=root password '${var.mysql_root_password}'",
      "mysql -uroot -e 'CREATE DATABASE jjaa_me CHARACTER SET utf8 COLLATE utf8_general_ci'",
-     "mysql -uroot jjaa_me < ../migrations/first.sql",
-     "cd /root/MCLOBwVMs",
+     "echo 'export DO_ID=${var.access_id}' >> ~/.bashrc",
+     "echo 'export DO_SECRET=${var.secret_key}' >> ~/.bashrc",
+     ". ~/.bashrc",
+     "/mclob --mysql-backup",
+     "mysql -uroot jjaa_me < mysql_backup.sql",
      "/mclob --add-service http ${var.mysql_root_password} ${var.access_id} ${var.secret_key}",
     ]
   }

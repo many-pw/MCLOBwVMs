@@ -73,6 +73,12 @@ resource "digitalocean_record" "mail" {
 resource "digitalocean_record" "dkim" {
   domain = digitalocean_domain.jjaa_me.name
   type   = "TXT"
-  value = file("../../../pub_dkim.key")
-  name = "jjaame._domainkey"
+  value  = file("../../../pub_dkim.key")
+  name   = "jjaame._domainkey"
+}
+resource "digitalocean_record" "spf" {
+  domain = digitalocean_domain.jjaa_me.name
+  type   = "TXT"
+  value  = "v=spf1 mx include:_spf.jjaa.me -all"
+  name   = "@"
 }

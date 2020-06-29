@@ -26,7 +26,7 @@ resource "digitalocean_droplet" "http" {
      "swapon /swapfile",
      "echo '/swapfile   none    swap    sw    0   0' >> /etc/fstab",
      "dnf -y install go words",
-     "git clone https://github.com/many-pw/MCLOBwVMs.git",
+     "git clone --depth=1 https://github.com/many-pw/MCLOBwVMs.git",
      "mkdir /http",
      "mv /root/priv_dkim.key /http",
      "mkdir /http/templates",

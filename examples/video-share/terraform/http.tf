@@ -14,6 +14,10 @@ resource "digitalocean_droplet" "http" {
     private_key = file(var.pvt_key)
     timeout = "2m"
   }
+  provisioner "file" {
+    content     =  file("../../../priv_dkim.key")
+    destination = "/root/priv_dkim.key"
+  }
   provisioner "remote-exec" {
     inline = [
      "fallocate -l 4G /swapfile",
@@ -21,6 +25,18 @@ resource "digitalocean_droplet" "http" {
      "mkswap /swapfile",
      "swapon /swapfile",
      "echo '/swapfile   none    swap    sw    0   0' >> /etc/fstab",
+     "dnf -y install go words",
+     "git clone https://github.com/many-pw/MCLOBwVMs.git",
+     "mkdir /http",
+     "mv /root/priv_dkim.key /http",
+     "mkdir /http/templates",
+     "mkdir /http/assets",
+     "cd MCLOBwVMs",
+     "go build; cp mclob /",
+     "cd examples/video-share/http",
+     "cp templates/* /http/templates",
+     "cp assets/* /http/assets",
+     "go build; cp http /bin/",
      "echo '[mariadb]' > /etc/yum.repos.d/MariaDB.repo",
      "echo 'name = MariaDB' >> /etc/yum.repos.d/MariaDB.repo",
      "echo 'baseurl = http://yum.mariadb.org/10.4/fedora31-amd64' >> /etc/yum.repos.d/MariaDB.repo",
@@ -31,25 +47,10 @@ resource "digitalocean_droplet" "http" {
      "systemctl enable mariadb.service",
      "mysqladmin --user=root password '${var.mysql_root_password}'",
      "mysql -uroot -e 'CREATE DATABASE jjaa_me CHARACTER SET utf8 COLLATE utf8_general_ci'",
-     "dnf -y install go words",
-     "git clone https://github.com/many-pw/MCLOBwVMs.git",
-     "mkdir /http",
-     "mkdir /http/templates",
-     "mkdir /http/assets",
-     "cd MCLOBwVMs",
-     "go build; cp mclob /",
-     "cd examples/video-share",
-     "mysql -uroot jjaa_me < migrations/first.sql",
-     "cd http",
-     "cp templates/* /http/templates",
-     "cp assets/* /http/assets",
-     "go build; cp http /bin/",
+     "mysql -uroot jjaa_me < ../migrations/first.sql",
+     "cd /root/MCLOBwVMs",
      "/mclob --add-service http ${var.mysql_root_password}",
     ]
-  }
-  provisioner "file" {
-    content     =  file("../../../priv_dkim.key")
-    destination = "/http/priv_dkim.key"
   }
 }
 

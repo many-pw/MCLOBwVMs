@@ -44,8 +44,6 @@ resource "digitalocean_droplet" "http" {
      "cp templates/* /http/templates",
      "cp assets/* /http/assets",
      "go build; cp http /bin/",
-     "openssl genrsa -out /http/dkim_private.pem 2048",
-     "openssl rsa -in dkim_private.pem -pubout -outform der 2>/dev/null | openssl base64 -A > dkim_private.64"
      "/mclob --add-service http ${var.mysql_root_password}",
     ]
   }
@@ -62,17 +60,15 @@ resource "digitalocean_record" "a" {
   name   = "@"
   value  = digitalocean_droplet.http.ipv4_address
 }
-resource "digitalocean_record" "a" {
-  depends_on = ["digitalocean_droplet.http"]
+resource "digitalocean_record" "mail" {
   domain = digitalocean_domain.jjaa_me.name
   type   = "CNAME"
   name   = "mail.jjaa.me"
-  value = "@"
+  value  = "@"
 }
-resource "digitalocean_record" "a" {
-  depends_on = ["digitalocean_droplet.http"]
+resource "digitalocean_record" "dkim" {
   domain = digitalocean_domain.jjaa_me.name
   type   = "TXT"
-  name   = "@"
-  value = "jjaame._domainkey"
+  value = file("pub_dkim.key")
+  name = "jjaame._domainkey"
 }

@@ -2,7 +2,10 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"os"
+	"os/exec"
+	"strings"
 )
 
 func main() {
@@ -20,6 +23,20 @@ func main() {
 		mysqlPassword := os.Args[3]
 
 		addService(service, mysqlPassword)
+	} else if os.Args[1] == "--terraform" {
+		exec.Command("openssl", "genrsa", "-out", "priv_dkim.key", "1024").Run()
+		exec.Command("openssl", "rsa", "-in", "priv_dkim.key",
+			"-pubout", "-out", "pub_dkim.key").Run()
+		b, _ := ioutil.ReadFile("pub_dkim.key")
+		lines := []string{}
+		for _, line := range strings.Split(string(b), "\n") {
+			if len(line) == 0 || strings.HasPrefix(line, "---") {
+				continue
+			}
+			lines = append(lines, line)
+		}
+		content := fmt.Sprintf("v=DKIM1; k=rsa; p=\"%s\"", []byte(strings.Join(lines, "")))
+		ioutil.WriteFile("pub_dkim.key", []byte(content), 0644)
 	}
 
 }

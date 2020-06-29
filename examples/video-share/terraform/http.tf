@@ -30,12 +30,12 @@ resource "digitalocean_droplet" "http" {
      "systemctl start mariadb.service",
      "systemctl enable mariadb.service",
      "mysqladmin --user=root password '${var.mysql_root_password}'",
-     "mysql -uroot -e 'CREATE DATABASE jjaa_me CHARACTER SET utf8 COLLATE utf8_general_ci'"
+     "mysql -uroot -e 'CREATE DATABASE jjaa_me CHARACTER SET utf8 COLLATE utf8_general_ci'",
      "dnf -y install go words",
      "git clone https://github.com/many-pw/MCLOBwVMs.git",
      "mkdir /http",
      "mkdir /http/templates",
-     "mkdir /http/assets"
+     "mkdir /http/assets",
      "cd MCLOBwVMs",
      "go build; cp mclob /",
      "cd examples/video-share",
@@ -48,7 +48,7 @@ resource "digitalocean_droplet" "http" {
     ]
   }
   provisioner "file" {
-    content     =  file("priv_dkim.key")
+    content     =  file("../../../priv_dkim.key")
     destination = "/http/priv_dkim.key"
   }
 }
@@ -73,6 +73,6 @@ resource "digitalocean_record" "mail" {
 resource "digitalocean_record" "dkim" {
   domain = digitalocean_domain.jjaa_me.name
   type   = "TXT"
-  value = file("pub_dkim.key")
+  value = file("../../../pub_dkim.key")
   name = "jjaame._domainkey"
 }

@@ -16,7 +16,7 @@ type Video struct {
 	CreatedAt   int64  `json:"created_at"`
 }
 
-const VIDEO_SELECT = "SELECT id, status, url_safe_name as urlsafename, title, comments, UNIX_TIMESTAMP(created_at) as createdat from videos"
+const VIDEO_SELECT = "SELECT id, status, ext, url_safe_name as urlsafename, title, comments, UNIX_TIMESTAMP(created_at) as createdat from videos"
 
 func ClearVideoForWorker(db *sqlx.DB, name string) string {
 	_, err := db.NamedExec("UPDATE videos set worker=null where worker=:worker",

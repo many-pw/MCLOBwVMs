@@ -1,7 +1,7 @@
 resource "digitalocean_droplet" "http" {
   image = "fedora-32-x64"
   name = "jjaa.me"
-  region = "nyc3"
+  region = "sfo2"
   size = "s-1vcpu-1gb"
   private_networking = true
   ssh_keys = [
@@ -26,6 +26,11 @@ resource "digitalocean_droplet" "http" {
      "swapon /swapfile",
      "echo '/swapfile   none    swap    sw    0   0' >> /etc/fstab",
      "dnf -y install go words",
+
+     "dnf -y install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm",
+     "dnf -y install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm",
+     "dnf -y install ffmpeg",
+
      "git clone --depth=1 https://github.com/many-pw/MCLOBwVMs.git",
      "mkdir /http",
      "mv /root/priv_dkim.key /http",
@@ -37,6 +42,7 @@ resource "digitalocean_droplet" "http" {
      "cp templates/* /http/templates",
      "cp assets/* /http/assets",
      "go build; cp http /bin/",
+     "cd ../worker; go build; cp worker /bin/",
      "echo '[mariadb]' > /etc/yum.repos.d/MariaDB.repo",
      "echo 'name = MariaDB' >> /etc/yum.repos.d/MariaDB.repo",
      "echo 'baseurl = http://yum.mariadb.org/10.4/fedora31-amd64' >> /etc/yum.repos.d/MariaDB.repo",
@@ -53,6 +59,7 @@ resource "digitalocean_droplet" "http" {
      "/mclob --mysql-backup",
      "mysql -uroot jjaa_me < mysql_backup.sql",
      "/mclob --add-service http ${var.mysql_root_password} ${var.access_id} ${var.secret_key}",
+     "/mclob --add-service worker ${var.mysql_root_password} ${var.access_id} ${var.secret_key}",
     ]
   }
 }

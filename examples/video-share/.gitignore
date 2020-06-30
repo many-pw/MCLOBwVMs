@@ -1,3 +1,4 @@
 http/http
+.DS_Store
 worker/worker
 go.sum

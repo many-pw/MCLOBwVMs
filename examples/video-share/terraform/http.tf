@@ -94,8 +94,10 @@ resource "digitalocean_record" "spf" {
   name   = "@"
 }
 
+/*
 resource "digitalocean_spaces_bucket" "cloud" {
   name   = "jjaa.me.cloud"
   region = "sfo2"
 }
+*/
 

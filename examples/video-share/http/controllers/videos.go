@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"mime/multipart"
 	"net/http"
 	"regexp"
 	"strings"
@@ -92,16 +93,16 @@ func VideosDestroy(c *gin.Context) {
 func VideosFile(c *gin.Context) {
 	BeforeAll("", c)
 	fileHeader, _ := c.FormFile("file")
-	video, _ := models.SelectVideo(Db, c.Param("name"))
-	tokens := strings.Split(fileHeader.Filename, ".")
-	ext := tokens[len(tokens)-1]
-	fileWithExt := video.UrlSafeName + "." + ext
-	f, _ := fileHeader.Open()
-	go func() {
+	go func(fileHeader *multipart.FileHeader, name string) {
+		video, _ := models.SelectVideo(Db, name)
+		tokens := strings.Split(fileHeader.Filename, ".")
+		ext := tokens[len(tokens)-1]
+		fileWithExt := video.UrlSafeName + "." + ext
+		f, _ := fileHeader.Open()
 		UploadToBucket(fileWithExt, f)
 		f.Close()
 		models.UpdateVideo(Db, "uploaded", ext, video.UrlSafeName)
-	}()
+	}(fileHeader, c.Param("name"))
 	c.Redirect(http.StatusFound, "/")
 	c.Abort()
 }

@@ -100,7 +100,7 @@ func VideosFile(c *gin.Context) {
 	go func() {
 		UploadToBucket(fileWithExt, f)
 		f.Close()
-		models.UpdateVideo(Db, "uploaded", video.UrlSafeName)
+		models.UpdateVideo(Db, "uploaded", ext, video.UrlSafeName)
 	}()
 	c.Redirect(http.StatusFound, "/")
 	c.Abort()
@@ -108,11 +108,6 @@ func VideosFile(c *gin.Context) {
 func convertVideoFile(fileWithExt, filename string) {
 	/*
 		//ffmpeg -ss 00:00:03 -i input -vframes 1 -q:v 2 output.jpg
-		exec.Command("ffmpeg", "-ss", "00:00:03", "-i",
-			util.AllConfig.Path.Videos+fileWithExt,
-			"-vframes", "1", "-q:v", "2",
-			util.AllConfig.Path.Videos+filename+".jpg").Output()
-		models.UpdateVideo(Db, "jpg_ready", filename)
 		exec.Command("ffmpeg", "-i",
 			util.AllConfig.Path.Videos+fileWithExt,
 			"-vcodec", "h264", "-acodec", "aac",

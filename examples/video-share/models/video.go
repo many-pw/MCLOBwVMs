@@ -12,11 +12,20 @@ type Video struct {
 	Comments    int    `json:"comments"`
 	Status      string `json:"status"`
 	UrlSafeName string `json:"url_safe_name"`
+	Ext         string `json:"ext"`
 	CreatedAt   int64  `json:"created_at"`
 }
 
 const VIDEO_SELECT = "SELECT id, status, url_safe_name as urlsafename, title, comments, UNIX_TIMESTAMP(created_at) as createdat from videos"
 
+func ClearVideoForWorker(db *sqlx.DB, name string) string {
+	_, err := db.NamedExec("UPDATE videos set worker=null where worker=:worker",
+		map[string]interface{}{"worker": name})
+	if err != nil {
+		return err.Error()
+	}
+	return ""
+}
 func SelectVideoForWorker(db *sqlx.DB, name string) (*Video, string) {
 	_, err := db.NamedExec("UPDATE videos set worker=:worker where worker is null and status='uploaded' limit 1",
 		map[string]interface{}{"worker": name})
@@ -75,9 +84,9 @@ func InsertVideo(db *sqlx.DB, title, safeName string, id int) string {
 	}
 	return ""
 }
-func UpdateVideo(db *sqlx.DB, status, name string) string {
-	_, err := db.NamedExec("UPDATE videos set status=:status where url_safe_name=:name",
-		map[string]interface{}{"status": status, "name": name})
+func UpdateVideo(db *sqlx.DB, status, ext, name string) string {
+	_, err := db.NamedExec("UPDATE videos set ext=:ext,status=:status where url_safe_name=:name",
+		map[string]interface{}{"status": status, "name": name, "ext": ext})
 	if err != nil {
 		return err.Error()
 	}

@@ -28,6 +28,7 @@ func main() {
 		DownloadFromBucket(video.UrlSafeName + "." + video.Ext)
 
 		ExtractJpg(video)
+		ConvertToMp4(video)
 
 		models.ClearVideoForWorker(Db, name)
 	}
@@ -39,4 +40,11 @@ func ExtractJpg(video *models.Video) {
 		"-vframes", "1", "-q:v", "2",
 		video.UrlSafeName+".jpg").Run()
 	models.UpdateVideo(Db, "jpg_ready", video.Ext, video.UrlSafeName)
+}
+func ConvertToMp4(video *models.Video) {
+	exec.Command("ffmpeg", "-i",
+		video.UrlSafeName+"."+video.Ext,
+		"-vcodec", "h264", "-acodec", "aac",
+		video.UrlSafeName+".mp4").Run()
+	models.UpdateVideo(Db, "mp4_ready", video.Ext, video.UrlSafeName)
 }

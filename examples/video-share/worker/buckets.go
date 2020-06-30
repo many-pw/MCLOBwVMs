@@ -49,6 +49,7 @@ func UploadToPublicBucket(filename string) {
 	_, err := uploader.Upload(&s3manager.UploadInput{
 		Bucket: aws.String(bucket),
 		Key:    aws.String("public/" + filename),
+		ACL:    aws.String("public-read"),
 		Body:   f,
 	})
 	f.Close()

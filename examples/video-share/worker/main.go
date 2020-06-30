@@ -23,8 +23,12 @@ func main() {
 	babbler.Count = 4
 	name := babbler.Babble()
 	for {
-		video, _ := models.SelectVideoForWorker(Db, name)
-		fmt.Println("got", video)
+		video, errString := models.SelectVideoForWorker(Db, name)
+		fmt.Println("got", video.UrlSafeName, errString)
+		if errString != "" {
+			time.Sleep(time.Second * 1)
+			continue
+		}
 
 		DownloadFromBucket(video.UrlSafeName + "." + video.Ext)
 
